@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 //Endpoints
 const BASE_URL = "https://connections-api.goit.global";
@@ -11,13 +12,34 @@ const CONTACTS_URL = `${BASE_URL}/contacts`;
 
 axios.defaults.baseURL = BASE_URL;
 
+// React Hot Toast Settings
+const toastSettings = {
+  duration: 5000,
+  position: "top-right",
+  icon: "🔥",
+  style: {
+    borderRadius: "10px",
+    background: "#333",
+    color: "#fff",
+  },
+  success: {
+    icon: "✅",
+  },
+  error: {
+    icon: "❌",
+  },
+};
+
+
 const signup = createAsyncThunk(
   "auth/signup",
   async (registerInfo, thunkAPI) => {
     try {
       const response = await axios.post(USERS_SIGNUP_URL, registerInfo);
+      toast.success("User registered successfully", toastSettings);
       return response.data;
     } catch (error) {
+      toast.error(error.response.data, toastSettings);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -26,8 +48,10 @@ const signup = createAsyncThunk(
 const login = createAsyncThunk("auth/login", async (loginInfo, thunkAPI) => {
   try {
     const response = await axios.post(USERS_LOGIN_URL, loginInfo);
+    toast.success("User logged in successfully", toastSettings);
     return response.data;
   } catch (error) {
+    toast.error(error.response.data, toastSettings);
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
@@ -35,8 +59,10 @@ const login = createAsyncThunk("auth/login", async (loginInfo, thunkAPI) => {
 const logout = createAsyncThunk("auth/logout", async (logoutInfo, thunkAPI) => {
   try {
     const response = await axios.post(USERS_LOGOUT_URL, logoutInfo);
+    toast.success("User logged out successfully", toastSettings);
     return response.data;
   } catch (error) {
+    toast.error(error.response.data, toastSettings);
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });

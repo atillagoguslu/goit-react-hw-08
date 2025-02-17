@@ -5,7 +5,6 @@ const initialState = {
   name: "",
   number: "",
   filteredContacts: [],
-  
 };
 
 const filterProccess = (filter, contacts) => {

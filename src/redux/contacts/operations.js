@@ -46,3 +46,4 @@ const removeContact = createAsyncThunk(
 );
 
 export { fetchContacts, addContact, removeContact };
+

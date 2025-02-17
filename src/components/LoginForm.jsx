@@ -1,30 +1,28 @@
-import css from "./RegistrationForm.module.css";
+import css from "./LoginForm.module.css";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { register } from "../redux/auth/authOperations";
+import { login } from "../redux/auth/authOperations";
 
 const initialValues = {
-  name: "",
   email: "",
   password: "",
 };
 
 const validationSchema = yup.object({
-  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required"),
 });
 
-const RegistrationForm = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    dispatch(register(values));
+    dispatch(login(values));
   };
 
   return (
-    <div className={css.registrationForm}>
+    <div className={css.loginForm}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -32,25 +30,25 @@ const RegistrationForm = () => {
       >
         <Form>
           <Field
-            className={css.registrationInput}
+            className={css.loginInput}
             type="text"
             name="name"
             placeholder="Name"
           />
           <Field
-            className={css.registrationInput}
+            className={css.loginInput}
             type="email"
             name="email"
             placeholder="Email"
           />
           <Field
-            className={css.registrationInput}
+            className={css.loginInput}
             type="password"
             name="password"
             placeholder="Password"
           />
-          <button className={css.registrationButton} type="submit">
-            Register
+          <button className={css.loginButton} type="submit">
+            Login
           </button>
         </Form>
       </Formik>
@@ -58,4 +56,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;

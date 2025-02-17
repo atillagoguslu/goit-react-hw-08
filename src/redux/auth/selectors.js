@@ -1,3 +1,4 @@
+// Auth related selectors
 const selectAuth = (state) => state.auth;
 
 export const selectUser = (state) => selectAuth(state).user;

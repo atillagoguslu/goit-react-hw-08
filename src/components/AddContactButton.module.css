@@ -1,9 +1,0 @@
-.button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.button:hover {
-  background-color: #000;
-  color: #fff;
-}

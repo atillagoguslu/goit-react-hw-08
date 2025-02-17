@@ -10,6 +10,7 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     openAddContactModal: (state) => {
+      console.log("Open Add Contact Modal");
       state.addContactModal = true;
     },
     closeAddContactModal: (state) => {
@@ -30,4 +31,6 @@ export const {
   openEditContactModal,
   closeEditContactModal,
 } = modalSlice.actions;
+
+export const selectAddContactModal = (state) => state.modal.addContactModal;
 export default modalSlice.reducer;

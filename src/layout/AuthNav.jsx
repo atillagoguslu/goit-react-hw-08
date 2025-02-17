@@ -1,20 +1,42 @@
-import css from "./AuthNav.module.css";
 import { NavLink } from "react-router";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/auth/selectors";
+import { Box, Button } from "@mui/material";
 
 const AuthNav = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <div className={css.authNav}>
+    <Box sx={{ display: "flex", gap: 2 }}>
       {!isLoggedIn && (
         <>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          <Button
+            component={NavLink}
+            to="/login"
+            color="inherit"
+            sx={{
+              "&.active": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Login
+          </Button>
+          <Button
+            component={NavLink}
+            to="/register"
+            color="inherit"
+            sx={{
+              "&.active": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Register
+          </Button>
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

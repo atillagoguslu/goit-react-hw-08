@@ -1,11 +1,15 @@
-import css from "./UserMenu.module.css";
+import { Box, Typography, Button } from "@mui/material";
 
 const UserMenu = () => {
   return (
-    <div className={css.userMenu}>
-      <p>Welcome, user</p>
-      <button type="button">Logout</button>
-    </div>
+    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Typography variant="body1" color="inherit">
+        Welcome, user
+      </Typography>
+      <Button variant="outlined" color="inherit" size="small">
+        Logout
+      </Button>
+    </Box>
   );
 };
 

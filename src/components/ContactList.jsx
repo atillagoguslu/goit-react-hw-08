@@ -1,39 +1,32 @@
 import styles from "./ContactList.module.css";
 import Contact from "./Contact.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectNameFilter,
-  selectFilteredContacts,
-  setFilteredContacts,
-} from "../redux/filteredSlice";
-import { removeContact, fetchContacts } from "../redux/constactsOps";
 import { useEffect } from "react";
-import { selectContacts, selectLoadingStates } from "../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectContactsLoadingStates } from "../redux/contacts/selectors";
+import { getContacts, removeContact } from "../redux/contacts/operations";
+import { selectFilteredContacts } from "../redux/filters/selectors";
+import { selectToken } from "../redux/auth/selectors";
+import axios from "axios";
 
 function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const filterValue = useSelector(selectNameFilter);
   const filteredContacts = useSelector(selectFilteredContacts);
-  const loadingStates = useSelector(selectLoadingStates);
+  const loadingStates = useSelector(selectContactsLoadingStates);
+  const token = useSelector(selectToken);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const filtered = contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filterValue.toLowerCase())
-    );
-    dispatch(setFilteredContacts(filtered));
-  }, [contacts, filterValue, dispatch]);
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
+    dispatch(getContacts());
+  }, []);
 
   const handleDelete = async (id) => {
     await dispatch(removeContact(id));
-    dispatch(fetchContacts());
+    dispatch(getContacts());
   };
 
-  if (filteredContacts.length === 0) {
+  if (!Array.isArray(filteredContacts) || filteredContacts.length === 0) {
     return (
       <div className={styles.contactListNotFound}>
         {loadingStates.fetch ? <p>Loading...</p> : <p>No contacts found</p>}

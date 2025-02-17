@@ -1,5 +1,5 @@
-import css from "./LoginForm.module.css";
-import { Formik, Form, Field } from "formik";
+import { Box, TextField, Button } from "@mui/material";
+import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/auth/operations";
@@ -22,37 +22,50 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={css.loginForm}>
+    <Box sx={{ width: "100%", mt: 1 }}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
-          <Field
-            className={css.loginInput}
-            type="text"
-            name="name"
-            placeholder="Name"
-          />
-          <Field
-            className={css.loginInput}
-            type="email"
-            name="email"
-            placeholder="Email"
-          />
-          <Field
-            className={css.loginInput}
-            type="password"
-            name="password"
-            placeholder="Password"
-          />
-          <button className={css.loginButton} type="submit">
-            Login
-          </button>
-        </Form>
+        {({ values, errors, touched, handleChange, handleBlur }) => (
+          <Form>
+            <TextField
+              fullWidth
+              margin="normal"
+              name="email"
+              label="Email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              name="password"
+              label="Password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Login
+            </Button>
+          </Form>
+        )}
       </Formik>
-    </div>
+    </Box>
   );
 };
 

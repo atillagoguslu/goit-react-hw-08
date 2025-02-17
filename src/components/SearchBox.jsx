@@ -1,45 +1,84 @@
-import styles from "./SearchBox.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFilter, selectNameFilter } from "../redux/filteredSlice";
-import { fetchContacts } from "../redux/constactsOps";
+import {
+  changeNameFilter,
+  changeNumberFilter,
+  changeSearchType,
+  changeSortType,
+} from "../redux/filters/slice";
+import { Formik, Form } from "formik";
+import { Box, TextField, MenuItem, Stack } from "@mui/material";
 
 function SearchBox() {
   const dispatch = useDispatch();
-  const filter = useSelector(selectNameFilter);
+  const { name, searchType, sortType } = useSelector((state) => state.filters);
+  const contacts = useSelector((state) => state.contacts.items);
 
-  const handleSortChange = (e) => {
-    const value = e.target.value;
-    dispatch(fetchContacts(value));
+  const initialValues = {
+    searchType: "name",
+    search: name || "",
+    sortType: "creationDate",
   };
 
   return (
-    <div className={styles.searchContainer}>
-      <div className={styles.searchBox}>
-        <input
-          className={styles.searchInput}
-          type="text"
-          placeholder="Search"
-          value={filter}
-          onChange={(e) => dispatch(changeFilter(e.target.value))}
-        />
-      </div>
-      <div className={styles.sortList}>
-        <label htmlFor="sortSelect" className={styles.sortLabel}>
-          Sort by:
-        </label>
-        <select
-          defaultValue=""
-          className={styles.sortSelect}
-          id="sortSelect"
-          onChange={handleSortChange}
-        >
-          
-          <option value="">Creation Date</option>
-          <option value="name">Name</option>
-          <option value="number">Number</option>
-        </select>
-      </div>
-    </div>
+    <Box>
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
+        {({ handleChange }) => (
+          <Form>
+            <Stack direction="row" spacing={2}>
+              <TextField
+                select
+                name="searchType"
+                value={searchType}
+                onChange={(e) => dispatch(changeSearchType(e.target.value))}
+                size="small"
+                sx={{ minWidth: 160 }}
+              >
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="number">Number</MenuItem>
+              </TextField>
+
+              <TextField
+                type="text"
+                name="search"
+                placeholder={`Search by ${searchType}`}
+                size="small"
+                fullWidth
+                onChange={(e) => {
+                  handleChange(e);
+                  if (searchType === "name") {
+                    dispatch(
+                      changeNameFilter({
+                        filter: e.target.value,
+                        contacts,
+                      })
+                    );
+                  } else if (searchType === "number") {
+                    dispatch(
+                      changeNumberFilter({
+                        filter: e.target.value,
+                        contacts,
+                      })
+                    );
+                  }
+                }}
+              />
+              <TextField
+                select
+                name="sortType"
+                value={sortType}
+                onChange={(e) => dispatch(changeSortType(e.target.value))}
+                size="small"
+                sx={{ minWidth: 160 }}
+              >
+                <MenuItem value="creationDate">Creation Date</MenuItem>
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="number">Number</MenuItem>
+              </TextField>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
+    </Box>
   );
 }
 

@@ -13,25 +13,3 @@ body {
   display: flex;
   min-height: 100vh;
 }
-
-button {
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #991b1b;
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-button:hover {
-  background-color: #7f1d1d;
-}
-
-button:focus {
-  outline: 2px solid #991b1b;
-  outline-offset: 2px;
-}

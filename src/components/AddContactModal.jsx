@@ -1,67 +1,115 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddContactModal } from "../redux/others/modalSlice";
 import { addContact } from "../redux/contacts/operations";
-import css from "./AddContactModal.module.css";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { selectAddContactModal } from "../redux/others/modalSlice";
+import {
+  Modal,
+  Box,
+  Typography,
+  IconButton,
+  TextField,
+  Button,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const initialValues = {
   name: "",
-  phone: "",
+  number: "",
 };
 
-
+const style = {
+  modal: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    mt: 6,
+  },
+};
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be less than 50 characters")
     .required("Name is required"),
-  phone: Yup.number()
-    .min(7, "Phone must be at least 7 characters")
-    .max(12, "Phone must be less than 12 characters")
-    .required("Phone is required"),
+  number: Yup.string().required("Number is required"),
 });
 
 const AddContactModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.modal.addContactModal);
+  const isOpen = useSelector(selectAddContactModal);
 
   const handleSubmit = (values, actions) => {
+    console.log("Add Contact Modal values", values);
     dispatch(addContact(values));
     actions.resetForm();
     dispatch(closeAddContactModal());
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      className={css.backdrop}
-      onClick={() => dispatch(closeAddContactModal())}
+    <Modal
+      open={isOpen}
+      onClose={() => dispatch(closeAddContactModal())}
+      aria-labelledby="add-contact-modal"
     >
-      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        {/* onClick={(e) => e.stopPropagation()} is used to prevent the modal from closing when the user clicks on it */}
-        <button
-          className={css.closeButton}
+      <Box sx={style.modal}>
+        <IconButton
+          aria-label="close"
           onClick={() => dispatch(closeAddContactModal())}
+          sx={{ position: "absolute", right: 8, top: 8 }}
         >
-          ×
-        </button>
-        <h2>Add New Contact</h2>
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h6" component="h2">
+          Add New Contact
+        </Typography>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form>
-            <Field type="text" name="name" placeholder="Name" />
-            <Field type="text" name="phone" placeholder="Phone" />
-            <button type="submit">Add Contact</button>
-          </Form>
+          {({ values, errors, touched, handleChange, handleBlur }) => (
+            <Form style={style.form}>
+              <TextField
+                name="name"
+                label="Name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+                fullWidth
+              />
+              <TextField
+                name="number"
+                label="Number"
+                value={values.number}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.number && Boolean(errors.number)}
+                helperText={touched.number && errors.number}
+                fullWidth
+              />
+              <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+                Add Contact
+              </Button>
+            </Form>
+          )}
         </Formik>
-      </div>
-    </div>
+      </Box>
+    </Modal>
   );
 };
 

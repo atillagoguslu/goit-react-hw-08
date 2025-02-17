@@ -1,9 +1,9 @@
 import styles from "./Contact.module.css";
 import { useSelector } from "react-redux";
-import { selectLoadingStates } from "../redux/contactsSlice";
+import { selectContactsLoadingStates } from "../redux/contacts/selectors";
 
 function Contact({ name, number, onDelete, image }) {
-  const loadingStates = useSelector(selectLoadingStates);
+  const loadingStates = useSelector(selectContactsLoadingStates);
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this contact?")) {
@@ -15,9 +15,6 @@ function Contact({ name, number, onDelete, image }) {
     <div className={styles.contact}>
       <div className={styles.contactCard}>
         <div className={styles.contactCardHeader}>
-          <div className={styles.contactCardImage}>
-            <img src={image} alt={name} className={styles.contactCardImage} />
-          </div>
           <div className={styles.userInfo}>
             <div className={styles.name}>
               <span>{name}</span>

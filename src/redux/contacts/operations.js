@@ -47,6 +47,7 @@ const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, thunkAPI) => {
     try {
+      console.log("Adding contact:", contact);
       const response = await axios.post(CONTACTS_URL, contact, {
         headers: {
           "Content-Type": "application/json",

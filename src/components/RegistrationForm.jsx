@@ -2,7 +2,7 @@ import css from "./RegistrationForm.module.css";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { register } from "../redux/auth/authOperations";
+import { signup } from "../redux/auth/operations";
 
 const initialValues = {
   name: "",
@@ -20,7 +20,7 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    dispatch(register(values));
+    dispatch(signup(values));
   };
 
   return (

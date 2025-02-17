@@ -1,10 +1,12 @@
 import "./App.css";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router";
-import Layout from "./components/Layout/Layout.jsx";
+import Layout from "./layout/Layout.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
-const RegisterPage = lazy(() => import("./pages/register/RegistrationPage.jsx"));
+const RegisterPage = lazy(() =>
+  import("./pages/register/RegistrationPage.jsx")
+);
 const LoginPage = lazy(() => import("./pages/login/LoginPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/contacts/ContactsPage.jsx"));
 

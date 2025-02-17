@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getContacts, addContact, removeContact } from "./constactsOps";
+import {
+  getContacts,
+  addContact,
+  updateContact,
+  removeContact,
+} from "./operations";
 
 const initialState = {
   items: [],
   loadingStates: {
     fetch: false,
     add: false,
+    update: false,
     delete: false,
   },
   error: null,
@@ -44,6 +50,20 @@ const contactsSlice = createSlice({
       .addCase(addContact.rejected, (state, action) => {
         state.error = action.error.message;
         state.loadingStates.add = false;
+      })
+      .addCase(updateContact.fulfilled, (state, action) => {
+        state.items = state.items.map((contact) =>
+          contact.id === action.payload.id ? action.payload : contact
+        );
+        state.loadingStates.update = false;
+      })
+      .addCase(updateContact.pending, (state) => {
+        state.loadingStates.update = true;
+        state.error = null;
+      })
+      .addCase(updateContact.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loadingStates.update = false;
       })
       .addCase(removeContact.fulfilled, (state, action) => {
         state.items = state.items.filter(

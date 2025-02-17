@@ -3,16 +3,17 @@ import css from "./Layout.module.css";
 import Navigation from "../components/Navigation/Navigation.jsx";
 import UserMenu from "../components/UserMenu/UserMenu.jsx";
 import AuthNav from "../components/AuthNav/AuthNav.jsx";
-
-
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../redux/auth/selectors";
 
 const Layout = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <div className={css.container}>
       <header className={css.header}>
         <Navigation />
-        <UserMenu />
-        <AuthNav />
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </header>
       <Outlet />
     </div>
@@ -20,4 +21,3 @@ const Layout = () => {
 };
 
 export default Layout;
-

@@ -1,6 +1,7 @@
 import "./App.css";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router";
+import Layout from "./components/Layout/Layout.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const RegisterPage = lazy(() => import("./pages/register/RegistrationPage.jsx"));
@@ -11,10 +12,12 @@ function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+        </Route>
       </Routes>
     </Suspense>
   );

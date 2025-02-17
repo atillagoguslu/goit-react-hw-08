@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-const API_PREFIX = "67acb2553f5a4e1477db8b91";
-const API_URL = `https://${API_PREFIX}.mockapi.io/`;
-const API_RESOURCE = "contacts";
+
+const BASE_URL = "https://connections-api.goit.global";
+const CONTACTS_URL = `${BASE_URL}/contacts`;
 
 // React Hot Toast Settings
 const toastSettings = {
@@ -23,15 +23,16 @@ const toastSettings = {
   },
 };
 
-const fetchContacts = createAsyncThunk(
-  "contacts/fetchAll",
-  async (sortBy = null, thunkAPI) => {
+const getContacts = createAsyncThunk(
+  "contacts/getContacts",
+  async (_, thunkAPI) => {
     try {
-      const params = sortBy ? { sortBy, order: "asc" } : {};
-      const response = await axios.get(`${API_URL}/${API_RESOURCE}`, {
-        params,
+      const response = await axios.get(CONTACTS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-      console.log("Fetching contacts:", response.data);
+      console.log("Contacts fetched:", response.data);
       toast.success("Contacts fetched successfully", toastSettings);
       return response.data;
     } catch (error) {
@@ -46,7 +47,11 @@ const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, thunkAPI) => {
     try {
-      const response = await axios.post(`${API_URL}/${API_RESOURCE}`, contact);
+      const response = await axios.post(CONTACTS_URL, contact, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log("Contact added:", response.data);
       toast.success("Contact added successfully", toastSettings);
       return response.data;
@@ -58,11 +63,35 @@ const addContact = createAsyncThunk(
   }
 );
 
+const updateContact = createAsyncThunk(
+  "contacts/updateContact",
+  async (contact, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `${CONTACTS_URL}/${contact.id}`,
+        contact,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Contact updated:", response.data);
+      toast.success("Contact updated successfully", toastSettings);
+      return response.data;
+    } catch (error) {
+      console.log("Error updating contact:", error);
+      toast.error(error.message, toastSettings);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const removeContact = createAsyncThunk(
   "contacts/removeContact",
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete(`${API_URL}/${API_RESOURCE}/${id}`);
+      const response = await axios.delete(`${CONTACTS_URL}/${id}`);
       console.log("Contact removed:", response.data);
       toast.success("Contact removed successfully", toastSettings);
       return response.data;
@@ -74,4 +103,4 @@ const removeContact = createAsyncThunk(
   }
 );
 
-export { fetchContacts, addContact, removeContact };
+export { getContacts, addContact, updateContact, removeContact };

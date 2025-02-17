@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, removeContact } from "./constactsOps";
+import { getContacts, addContact, removeContact } from "./constactsOps";
 
 const initialState = {
   items: [],
@@ -19,15 +19,31 @@ const contactsSlice = createSlice({
   // Extra Reducers:
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.fulfilled, (state, action) => {
+      .addCase(getContacts.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loadingStates.fetch = false;
         state.error = null;
+      })
+      .addCase(getContacts.pending, (state) => {
+        state.loadingStates.fetch = true;
+        state.error = null;
+      })
+      .addCase(getContacts.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loadingStates.fetch = false;
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.loadingStates.add = false;
         state.error = null;
+      })
+      .addCase(addContact.pending, (state) => {
+        state.loadingStates.add = true;
+        state.error = null;
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loadingStates.add = false;
       })
       .addCase(removeContact.fulfilled, (state, action) => {
         state.items = state.items.filter(
@@ -36,29 +52,13 @@ const contactsSlice = createSlice({
         state.loadingStates.delete = false;
         state.error = null;
       })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loadingStates.fetch = false;
-      })
-      .addCase(addContact.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.loadingStates.add = false;
+      .addCase(removeContact.pending, (state) => {
+        state.loadingStates.delete = true;
+        state.error = null;
       })
       .addCase(removeContact.rejected, (state, action) => {
         state.error = action.error.message;
         state.loadingStates.delete = false;
-      })
-      .addCase(fetchContacts.pending, (state) => {
-        state.loadingStates.fetch = true;
-        state.error = null;
-      })
-      .addCase(addContact.pending, (state) => {
-        state.loadingStates.add = true;
-        state.error = null;
-      })
-      .addCase(removeContact.pending, (state) => {
-        state.loadingStates.delete = true;
-        state.error = null;
       });
   },
 });

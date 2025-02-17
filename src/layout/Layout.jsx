@@ -6,6 +6,7 @@ import AuthNav from "../components/AuthNav/AuthNav.jsx";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/auth/selectors";
 import { Toaster } from "react-hot-toast";
+import AddContactButton from "../components/AddContactButton";
 
 const Layout = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -15,6 +16,7 @@ const Layout = () => {
       <Toaster />
       <header className={css.header}>
         <Navigation />
+        <AddContactButton />
         {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </header>
       <Outlet />

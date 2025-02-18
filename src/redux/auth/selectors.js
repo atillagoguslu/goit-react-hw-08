@@ -1,8 +1,7 @@
 // Auth related selectors
-const selectAuth = (state) => state.auth;
-
-export const selectUser = (state) => selectAuth(state).user;
-export const selectToken = (state) => selectAuth(state).token;
-export const selectIsLoggedIn = (state) => selectAuth(state).isLoggedIn;
-export const selectIsRefreshing = (state) => selectAuth(state).isRefreshing;
-export const selectIsLoading = (state) => selectAuth(state).isLoading;
+export const selectUser = (state) => state.auth.user;
+export const selectID = (state) => state.auth.id;
+export const selectToken = (state) => state.auth.token;
+export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
+export const selectIsRefreshing = (state) => state.auth.isRefreshing;
+export const selectIsLoading = (state) => state.auth.isLoading;

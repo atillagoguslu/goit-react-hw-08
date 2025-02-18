@@ -30,7 +30,6 @@ const toastSettings = {
   },
 };
 
-
 const signup = createAsyncThunk(
   "auth/signup",
   async (registerInfo, thunkAPI) => {
@@ -39,7 +38,10 @@ const signup = createAsyncThunk(
       toast.success("User registered successfully", toastSettings);
       return response.data;
     } catch (error) {
-      toast.error(error.response.data, toastSettings);
+      toast.error(
+        error.response.data.message || "An error occurred",
+        toastSettings
+      );
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -51,7 +53,10 @@ const login = createAsyncThunk("auth/login", async (loginInfo, thunkAPI) => {
     toast.success("User logged in successfully", toastSettings);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data, toastSettings);
+    toast.error(
+      error.response.data.message || "An error occurred",
+      toastSettings
+    );
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
@@ -62,7 +67,10 @@ const logout = createAsyncThunk("auth/logout", async (logoutInfo, thunkAPI) => {
     toast.success("User logged out successfully", toastSettings);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data, toastSettings);
+    toast.error(
+      error.response.data.message || "An error occurred",
+      toastSettings
+    );
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });

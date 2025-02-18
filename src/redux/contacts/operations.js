@@ -37,8 +37,11 @@ const getContacts = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("Error fetching contacts:", error);
-      toast.error(error.message, toastSettings);
-      return thunkAPI.rejectWithValue(error.message);
+      toast.error(
+        error.response.data.message || "An error occurred",
+        toastSettings
+      );
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -58,8 +61,11 @@ const addContact = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("Error adding contact:", error);
-      toast.error(error.message, toastSettings);
-      return thunkAPI.rejectWithValue(error.message);
+      toast.error(
+        error.response.data.message || "An error occurred",
+        toastSettings
+      );
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -70,7 +76,10 @@ const updateContact = createAsyncThunk(
     try {
       const response = await axios.put(
         `${CONTACTS_URL}/${contact.id}`,
-        contact,
+        {
+          name: contact.name,
+          number: contact.number,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -82,8 +91,11 @@ const updateContact = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("Error updating contact:", error);
-      toast.error(error.message, toastSettings);
-      return thunkAPI.rejectWithValue(error.message);
+      toast.error(
+        error.response.data.message || "An error occurred",
+        toastSettings
+      );
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -92,14 +104,19 @@ const removeContact = createAsyncThunk(
   "contacts/removeContact",
   async (id, thunkAPI) => {
     try {
+      console.log("Removing contact:", id);
+      console.log("Axios URL:", CONTACTS_URL, "/", id);
       const response = await axios.delete(`${CONTACTS_URL}/${id}`);
       console.log("Contact removed:", response.data);
       toast.success("Contact removed successfully", toastSettings);
       return response.data;
     } catch (error) {
       console.log("Error removing contact:", error);
-      toast.error(error.message, toastSettings);
-      return thunkAPI.rejectWithValue(error.message);
+      toast.error(
+        error.response.data.message || "An error occurred",
+        toastSettings
+      );
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

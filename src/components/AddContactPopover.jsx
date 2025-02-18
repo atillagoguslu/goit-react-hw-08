@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { selectAddContactModal } from "../redux/others/modalSlice";
 import {
-  Modal,
+  Popover,
   Box,
   Typography,
   IconButton,
@@ -20,22 +20,14 @@ const initialValues = {
 };
 
 const style = {
-  modal: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
+  popover: {
     p: 4,
-    borderRadius: 2,
   },
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: 8,
-    mt: 6,
+    gap: 18,
+    width: 280,
   },
 };
 
@@ -47,7 +39,7 @@ const validationSchema = Yup.object().shape({
   number: Yup.string().required("Number is required"),
 });
 
-const AddContactModal = () => {
+const AddContactPopover = ({ anchorEl }) => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAddContactModal);
 
@@ -59,12 +51,23 @@ const AddContactModal = () => {
   };
 
   return (
-    <Modal
+    <Popover
       open={isOpen}
+      anchorEl={anchorEl}
       onClose={() => dispatch(closeAddContactModal())}
-      aria-labelledby="add-contact-modal"
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+      sx={{
+        mt: 1,
+      }}
     >
-      <Box sx={style.modal}>
+      <Box sx={style.popover}>
         <IconButton
           aria-label="close"
           onClick={() => dispatch(closeAddContactModal())}
@@ -72,7 +75,7 @@ const AddContactModal = () => {
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
           Add New Contact
         </Typography>
         <Formik
@@ -91,6 +94,7 @@ const AddContactModal = () => {
                 error={touched.name && Boolean(errors.name)}
                 helperText={touched.name && errors.name}
                 fullWidth
+                size="small"
               />
               <TextField
                 name="number"
@@ -101,16 +105,17 @@ const AddContactModal = () => {
                 error={touched.number && Boolean(errors.number)}
                 helperText={touched.number && errors.number}
                 fullWidth
+                size="small"
               />
-              <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+              <Button variant="contained" type="submit" sx={{ mt: 1 }}>
                 Add Contact
               </Button>
             </Form>
           )}
         </Formik>
       </Box>
-    </Modal>
+    </Popover>
   );
 };
 
-export default AddContactModal;
+export default AddContactPopover;

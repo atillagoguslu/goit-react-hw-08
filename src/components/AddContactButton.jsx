@@ -1,17 +1,19 @@
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import AddContactModal from "./AddContactModal";
+import AddContactPopover from "./AddContactPopover";
 import { useDispatch } from "react-redux";
 import { openAddContactModal } from "../redux/others/modalSlice";
+import { useState } from "react";
 
 // This button is used to add a new contact to the list.
 // It opens a modal with a form to add a new contact.
 
 const AddContactButton = () => {
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = () => {
-    console.log("Add Contact Button clicked");
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
     dispatch(openAddContactModal());
   };
 
@@ -33,7 +35,8 @@ const AddContactButton = () => {
       >
         Add Contact
       </Button>
-      <AddContactModal />
+
+      <AddContactPopover anchorEl={anchorEl} />
     </>
   );
 };

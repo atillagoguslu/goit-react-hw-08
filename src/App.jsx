@@ -10,7 +10,17 @@ const RegisterPage = lazy(() =>
 const LoginPage = lazy(() => import("./pages/login/LoginPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/contacts/ContactsPage.jsx"));
 
+import { useDispatch } from "react-redux";
+import { currentUser } from "./redux/auth/operations";
+import { useEffect } from "react";
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(currentUser());
+  }, [dispatch]);
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>

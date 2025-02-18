@@ -19,6 +19,8 @@ function ContactList() {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
     dispatch(getContacts());
+
+    // eslint-disable-next-line
   }, []);
 
   const handleDelete = async (id) => {

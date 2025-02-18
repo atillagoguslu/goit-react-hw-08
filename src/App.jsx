@@ -30,15 +30,17 @@ function App() {
           <Route index element={<HomePage />} />
           <Route
             path="/register"
-            element={<RestrictedRoute component={RegistrationPage} />}
+            element={
+              <RestrictedRoute Component={<RegistrationPage />} to="/" />
+            }
           />
           <Route
             path="/login"
-            element={<RestrictedRoute component={LoginPage} />}
+            element={<RestrictedRoute Component={<LoginPage />} to="/" />}
           />
           <Route
             path="/contacts"
-            element={<PrivateRoute component={ContactsPage} />}
+            element={<PrivateRoute Component={<ContactsPage />} to="/login" />}
           />
         </Route>
       </Routes>

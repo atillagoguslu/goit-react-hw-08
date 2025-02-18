@@ -52,16 +52,19 @@ const contactsSlice = createSlice({
         state.loadingStates.add = false;
       })
       .addCase(updateContact.fulfilled, (state, action) => {
+        console.log("(In Slice) Updating contact:", action.payload);
         state.items = state.items.map((contact) =>
           contact.id === action.payload.id ? action.payload : contact
         );
         state.loadingStates.update = false;
       })
       .addCase(updateContact.pending, (state) => {
+        console.log("(In Slice) Updating contact pending");
         state.loadingStates.update = true;
         state.error = null;
       })
       .addCase(updateContact.rejected, (state, action) => {
+        console.log("(In Slice) Updating contact rejected");
         state.error = action.error.message;
         state.loadingStates.update = false;
       })

@@ -2,14 +2,20 @@ import { Box, Typography, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/auth/operations";
 import { selectUser, selectID } from "../redux/auth/selectors";
+import { useNavigate } from "react-router";
 
 const UserMenu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const id = useSelector(selectID);
 
   const handleLogout = () => {
-    dispatch(logout({ id }));
+    dispatch(logout({ id }))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      });
   };
 
   return (

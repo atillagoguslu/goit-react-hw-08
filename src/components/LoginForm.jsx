@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/auth/operations";
+import { useNavigate } from "react-router";
 
 const initialValues = {
   email: "",
@@ -16,9 +17,13 @@ const validationSchema = yup.object({
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const handleSubmit = (values) => {
-    dispatch(login(values));
+    dispatch(login(values)).unwrap().then(() => {
+      navigate("/contacts");
+    });
   };
 
   return (

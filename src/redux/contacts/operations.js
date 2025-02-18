@@ -32,11 +32,9 @@ const getContacts = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
-      console.log("Contacts fetched:", response.data);
       toast.success("Contacts fetched successfully", toastSettings);
       return response.data;
     } catch (error) {
-      console.log("Error fetching contacts:", error);
       toast.error(
         error.response.data.message || "An error occurred",
         toastSettings
@@ -50,17 +48,14 @@ const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, thunkAPI) => {
     try {
-      console.log("Adding contact:", contact);
       const response = await axios.post(CONTACTS_URL, contact, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log("Contact added:", response.data);
       toast.success("Contact added successfully", toastSettings);
       return response.data;
     } catch (error) {
-      console.log("Error adding contact:", error);
       toast.error(
         error.response.data.message || "An error occurred",
         toastSettings
@@ -74,6 +69,7 @@ const updateContact = createAsyncThunk(
   "contacts/updateContact",
   async (contact, thunkAPI) => {
     try {
+      console.log("(In Operations) Updating contact:", contact);
       const response = await axios.put(
         `${CONTACTS_URL}/${contact.id}`,
         {
@@ -86,11 +82,11 @@ const updateContact = createAsyncThunk(
           },
         }
       );
-      console.log("Contact updated:", response.data);
+      console.log("(In Operations) Contact updated:", response.data);
       toast.success("Contact updated successfully", toastSettings);
       return response.data;
     } catch (error) {
-      console.log("Error updating contact:", error);
+      console.log("(In Operations) Error updating contact:", error);
       toast.error(
         error.response.data.message || "An error occurred",
         toastSettings
@@ -104,14 +100,10 @@ const removeContact = createAsyncThunk(
   "contacts/removeContact",
   async (id, thunkAPI) => {
     try {
-      console.log("Removing contact:", id);
-      console.log("Axios URL:", CONTACTS_URL, "/", id);
       const response = await axios.delete(`${CONTACTS_URL}/${id}`);
-      console.log("Contact removed:", response.data);
       toast.success("Contact removed successfully", toastSettings);
       return response.data;
     } catch (error) {
-      console.log("Error removing contact:", error);
       toast.error(
         error.response.data.message || "An error occurred",
         toastSettings

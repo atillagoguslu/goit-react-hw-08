@@ -44,7 +44,6 @@ const AddContactPopover = ({ anchorEl }) => {
   const isOpen = useSelector(selectAddContactModal);
 
   const handleSubmit = (values, actions) => {
-    console.log("Add Contact Modal values", values);
     dispatch(addContact(values));
     actions.resetForm();
     dispatch(closeAddContactModal());
@@ -57,11 +56,11 @@ const AddContactPopover = ({ anchorEl }) => {
       onClose={() => dispatch(closeAddContactModal())}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "left",
+        horizontal: "center",
       }}
       transformOrigin={{
         vertical: "top",
-        horizontal: "left",
+        horizontal: "center",
       }}
       sx={{
         mt: 1,

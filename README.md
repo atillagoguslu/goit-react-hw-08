@@ -1,38 +1,93 @@
-# 📱 Phonebook App - Homework 7
+# 📱 Phonebook App (Final Project)
 
-![React](https://img.shields.io/badge/React-18.2.0-blue) ![Redux](https://img.shields.io/badge/Redux-latest-purple) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![React](https://img.shields.io/badge/React-18.2.0-blue) ![Redux](https://img.shields.io/badge/Redux-latest-purple) ![Material-UI](https://img.shields.io/badge/MUI-latest-blue) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 
-## 📝 Introduction
+## 🌟 Overview
 
-This project is part of **Homework 7**, focusing on building a modern React application with Redux state management. The application serves as a comprehensive contact management system with real-time search capabilities and seamless state management.
+A modern, feature-rich contact management application built with React and Redux. This application provides a secure and intuitive interface for managing your contacts with real-time search and filtering capabilities.
 
-## 🔄 App Flow
+## ✨ Features
 
-### 📱 Core Features
+### 🔐 Authentication
 
-1. **📋 Home Screen**
+- Secure user registration and login
+- Protected routes for authenticated users
+- Persistent authentication state
 
-   - Displays the comprehensive list of contacts
-   - Clean and intuitive user interface
+### 📋 Contact Management
 
-2. **➕ Add Contact**
+- Add new contacts with name and phone number
+- Edit existing contact information
+- Delete contacts
+- View contact list with beautiful card layout
 
-   - User-friendly contact form
-   - Input validation
-   - Duplicate contact prevention
+### 🔍 Advanced Search & Filtering
 
-3. **❌ Delete Contact**
+- Real-time search by name or phone number
+- Sort contacts by:
+  - Creation date
+  - Name
+  - Phone number
+- Case-insensitive search
 
-   - One-click contact removal
-   - Instant UI updates
+### 💅 Modern UI/UX
 
-4. **🔍 Search Contacts**
+- Material-UI components
+- Responsive design
+- Beautiful card-based layout
+- Loading states and animations
+- Toast notifications for actions
 
-   - Real-time search functionality
-   - Case-insensitive search
-   - Instant filtering
+## 🛠 Technical Stack
 
-5. **⚛️ State Management**
-   - Centralized Redux store
-   - Efficient state updates
-   - Persistent data storage
+- **Frontend**: React 18
+- **State Management**: Redux Toolkit
+- **UI Framework**: Material-UI
+- **Form Handling**: Formik + Yup
+- **Routing**: React Router
+- **HTTP Client**: Axios
+- **Notifications**: React Hot Toast
+
+## 🔧 Installation
+
+1. Clone the repository
+
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Start the development server
+
+```bash
+npm run dev
+```
+
+## 🚀 Usage
+
+1. Register a new account or login with existing credentials
+2. Navigate to the contacts page
+3. Use the "Add Contact" button to create new contacts
+4. Search contacts using the search bar
+5. Sort contacts using the sort dropdown
+6. Edit or delete contacts using the respective buttons
+
+## 🔒 Security
+
+- JWT-based authentication
+- Protected routes
+- Secure API endpoints
+- No sensitive data exposure
+
+## 🌐 API Integration
+
+The application integrates with a RESTful API at `https://connections-api.goit.global` for:
+
+- User authentication
+- Contact CRUD operations
+- Data persistence

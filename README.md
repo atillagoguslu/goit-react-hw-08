@@ -53,7 +53,7 @@ A modern, feature-rich contact management application built with React and Redux
 1. Clone the repository
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/atillagoguslu/goit-react-hw-08
 ```
 
 2. Install dependencies

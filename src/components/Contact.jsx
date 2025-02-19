@@ -64,7 +64,7 @@ function Contact({ id, name, number, onDelete, image }) {
       if (error.response?.status === 404) {
         toast.error("Contact not found. It may have been deleted.", {
           duration: 5000,
-          position: "top-right",
+          position: "top-center",
           icon: "❌",
           style: {
             borderRadius: "10px",
@@ -187,11 +187,7 @@ function Contact({ id, name, number, onDelete, image }) {
             )}
           </Formik>
           {/* A warnning message that server is not allowed to update the contact */}
-          <Typography
-            mt={2}
-            variant="body2"
-            color="text.secondary"
-          >
+          <Typography mt={2} variant="body2" color="text.secondary">
             Üzgünüm, sunucu kişiyi güncellemeye izin vermiyor.
           </Typography>
           <Typography variant="body2" color="text.secondary">

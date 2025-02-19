@@ -15,8 +15,7 @@ axios.defaults.baseURL = BASE_URL;
 // React Hot Toast Settings
 const toastSettings = {
   duration: 5000,
-  position: "top-right",
-  icon: "🔥",
+  position: "top-center",
   style: {
     borderRadius: "10px",
     background: "#333",
